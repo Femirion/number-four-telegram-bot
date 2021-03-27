@@ -29,6 +29,10 @@ abstract class ServiceCommand extends BotCommand {
                 "Информация об объекте: " + object.getDesc());
         sendPhotoAnswer(absSender, chatId, this.getCommandIdentifier(), userName, object.getPhotoId());
 
+        if (object.getSuperPhotoId() == null) {
+            return;
+        }
+
         // если 0 - надо выслать пиктограммы
         if (countOfDependsObject == 0) {
             sendAnswer(absSender, chatId, this.getCommandIdentifier(), userName, "Пиктограммы связанных объектов: ");

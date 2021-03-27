@@ -127,7 +127,8 @@ public class ExploringCommand extends ServiceCommand {
             return -1;
         }
         // todo increase to 20 minutes!!!
-        int time = playerId.equals("пв60") ? 10 : 2;
-        return time - (int) minutes;
+//        int time = playerId.equals("пв60") ? 10 : 2;
+//        return time - (int) minutes;
+        return 0;
     }
 }

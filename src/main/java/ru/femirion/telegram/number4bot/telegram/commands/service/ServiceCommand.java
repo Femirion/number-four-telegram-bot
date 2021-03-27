@@ -21,9 +21,12 @@ abstract class ServiceCommand extends BotCommand {
     }
 
     void exploringSeveralObjectsHandler(GameObject object, Player player, AbsSender absSender, long chatId, String userName) {
-        var countOfDependsObject = player.getObjects().stream()
-                .filter(id -> object.getDependedObjects().contains(id))
-                .count();
+        long countOfDependsObject = 0;
+        if (object.getDependedObjects() != null) {
+            countOfDependsObject = player.getObjects().stream()
+                    .filter(id -> object.getDependedObjects().contains(id))
+                    .count();
+        }
 
         sendAnswer(absSender, chatId, this.getCommandIdentifier(), userName,
                 "Информация об объекте: " + object.getDesc());
@@ -36,18 +39,18 @@ abstract class ServiceCommand extends BotCommand {
         // если 0 - надо выслать пиктограммы
         if (countOfDependsObject == 0) {
             sendAnswer(absSender, chatId, this.getCommandIdentifier(), userName, "Пиктограммы связанных объектов: ");
-            sendPhotoAnswer(absSender, chatId, this.getCommandIdentifier(), userName, object.getSuperPhotoId());
+            sendPhotoAnswer(absSender, chatId, this.getCommandIdentifier(), userName, object.getActivationPhotoId());
         }
         // если 1 - надо выслать порядок активации
         if (countOfDependsObject == 1) {
             sendAnswer(absSender, chatId, this.getCommandIdentifier(), userName, "Порядок активации: ");
-            sendPhotoAnswer(absSender, chatId, this.getCommandIdentifier(), userName, object.getActivationPhotoId());
+            sendPhotoAnswer(absSender, chatId, this.getCommandIdentifier(), userName, object.getSuperPhotoId());
         }
         // если 2 или 3 - надо выслать описание супер-объекта
         if (countOfDependsObject == 2 || countOfDependsObject == 3) {
             sendAnswer(absSender, chatId, this.getCommandIdentifier(), userName, object.getSuperObjectDesc());
             sendAnswer(absSender, chatId, this.getCommandIdentifier(), userName, "Порядок активации: ");
-            sendPhotoAnswer(absSender, chatId, this.getCommandIdentifier(), userName, object.getActivationPhotoId());
+            sendPhotoAnswer(absSender, chatId, this.getCommandIdentifier(), userName, object.getSuperPhotoId());
         }
 
         if (object.getSecondDependedObjects() == null ) {
@@ -61,20 +64,20 @@ abstract class ServiceCommand extends BotCommand {
         // если 0 - надо выслать пиктограммы
         if (countOfSecondDependsObject == 0) {
             sendAnswer(absSender, chatId, this.getCommandIdentifier(), userName, "Пиктограммы связанных объектов второй схемы: ");
-            sendPhotoAnswer(absSender, chatId, this.getCommandIdentifier(), userName, object.getSecondSuperPhotoId());
+            sendPhotoAnswer(absSender, chatId, this.getCommandIdentifier(), userName, object.getSecondActivationPhotoId());
             return;
         }
         // если 1 - надо выслать порядок активации
         if (countOfSecondDependsObject == 1) {
             sendAnswer(absSender, chatId, this.getCommandIdentifier(), userName, "Порядок активации второй схемы: ");
-            sendPhotoAnswer(absSender, chatId, this.getCommandIdentifier(), userName, object.getSecondActivationPhotoId());
+            sendPhotoAnswer(absSender, chatId, this.getCommandIdentifier(), userName, object.getSecondSuperPhotoId());
             return;
         }
         // если 2 - надо выслать описание супер-объекта
         if (countOfSecondDependsObject == 2 || countOfSecondDependsObject == 3) {
             sendAnswer(absSender, chatId, this.getCommandIdentifier(), userName, object.getSecondSuperObjectDesc());
             sendAnswer(absSender, chatId, this.getCommandIdentifier(), userName, "Порядок активации: ");
-            sendPhotoAnswer(absSender, chatId, this.getCommandIdentifier(), userName, object.getSecondActivationPhotoId());
+            sendPhotoAnswer(absSender, chatId, this.getCommandIdentifier(), userName, object.getSecondSuperObjectDesc());
         }
 
     }

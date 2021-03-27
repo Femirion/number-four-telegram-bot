@@ -60,8 +60,7 @@ public final class Bot extends TelegramLongPollingCommandBot {
         register(new BetAuctionCommand("bet", "Ставка на аукционе"));
         register(new CloseAuctionCommand("sold", "Завершение аукциона"));
         register(new MoneyTransferCommand("transfer", "Денежный перевод от игрока к игроку"));
-        // TODO delete me before production!!!
-        register(new TestCommand("test", "тестовая команда"));
+//        register(new TestCommand("test", "тестовая команда"));
         userSettings = new HashMap<>();
         players = JsonUtils.getPlayers();
         gameObjects = JsonUtils.getObjects();
